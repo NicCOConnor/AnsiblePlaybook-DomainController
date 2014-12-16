@@ -2,10 +2,13 @@
 The goal of this playbook is to automatically provision a Windows 2008 R2 domain controller with any number of member domain controllers. 
 ####**Vagrant Pre-reqs**
 Vagrant 1.6.5+ https://www.vagrantup.com/
+
 VirtualBox 4.3.12+ https://www.virtualbox.org/
 
 I found it much easier to work in this environment by using the vagrant sahara plugin, this plugin allows you to create a VirtualBox snapshot  before applying any playbooks. Allowing you to repeat a playbook run much faster.
+
 ```vagrant plugin install sahara```
+
 **Docs:** https://github.com/jedi4ever/sahara
 
 ####**Configuring the Vagrant Environment.** 
@@ -57,7 +60,8 @@ DC-02 ansible_ssh_host=192.168.33.12
 ```
 
 #####**Running the Ansible Playbook**#####
-If you installed the sahara plugin for vagrant take a snapshot of your environment 
+If you installed the sahara plugin for vagrant take a snapshot of your environment
+
 ```vagrant sandbox on```
 
 follow these steps to run the Ansible Playbook
