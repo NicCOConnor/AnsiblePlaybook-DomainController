@@ -1,0 +1,15 @@
+---
+#This playbook will install and configure a 2008 R2 domain controller.
+- name: Set DNS Server
+  script: files/SetDNS.ps1 -DNS {{ dns_server }} -Network {{ network }}
+  
+- name: Install Active Directory
+  script: files/InstallActiveDirectory.ps1 -ReplicaOrNewDomain {{ replicaornewdomain }} -NewDomainDNSName {{ domain }} -DomainNetBiosName {{ netbios }} -Username {{ domain_username }} -Password {{ domain_password }} -ReplicaDomainDNSName {{ domain }}
+
+- name: Reboot Computer
+  raw: powershell.exe -Command Restart-Computer -Force
+  
+- name: Wait for computer to reboot
+  local_action: wait_for host={{ansible_ssh_host}}
+                port={{ansible_ssh_port}} state=started
+                delay=60

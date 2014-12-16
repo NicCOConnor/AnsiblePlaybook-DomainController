@@ -1,0 +1,22 @@
+---
+
+- name: apply common configuration to all nodes
+  hosts: all
+  
+  roles:
+  - common
+  
+- name: Install Primary Domain Controllers
+  hosts: pdc
+  roles: 
+    - domain-controller
+
+- name: Install Member Domain Controllers
+  hosts: mdc
+  roles:
+    - domain-controller
+    
+- name: Join Computers to Domain
+  hosts: win7
+  roles:
+    - add-domain

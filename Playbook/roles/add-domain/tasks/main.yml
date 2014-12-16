@@ -1,0 +1,7 @@
+---
+
+- name: Set DNS Server
+  script: files/SetDNS.ps1 -DNS {{ dns_server }} -Network {{ network }}
+  
+- name: Add Computer to Domain
+  script: files/AddDomain.ps1 -Domain {{ domain }} -Username {{ domain_username }} -Password {{ domain_password}}

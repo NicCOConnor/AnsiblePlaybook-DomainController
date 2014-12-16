@@ -1,0 +1,4 @@
+---
+
+#Member Domain Controller Variables
+replicaornewdomain: "replica"

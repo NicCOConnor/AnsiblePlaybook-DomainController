@@ -1,0 +1,10 @@
+ansible_ssh_user: Administrator
+ansible_ssh_pass: vagrant
+ansible_ssh_port: 5986
+ansible_connection: winrm
+network: 192.168.33.0
+domain_username: Administrator
+domain_password: vagrant
+domain: "testing.com"
+netbios: "testing"
+dns_server: 192.168.33.10

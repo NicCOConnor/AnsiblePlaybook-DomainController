@@ -1,0 +1,4 @@
+---
+
+#Domain Controller Variables
+replicaornewdomain: "domain"
