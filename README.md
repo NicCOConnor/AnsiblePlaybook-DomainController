@@ -1,5 +1,9 @@
 ####**Ansible-Playbook: Server 2008 R2 Domain Controller**
 The goal of this playbook is to automatically provision a Windows 2008 R2 domain controller with any number of member domain controllers. 
+
+**Note:**
+If you intend to use this playbook outside the vagrant environment provided, it will not work without first installing ansible-modules-extras from source through my forked github repo https://github.com/NicCOConnor/ansible-modules-extras, see the vagrant/user-config.sh script for an idea on how to accomplish this. 
+
 ####**Vagrant Pre-reqs**
 Vagrant 1.6.5+ https://www.vagrantup.com/
 
