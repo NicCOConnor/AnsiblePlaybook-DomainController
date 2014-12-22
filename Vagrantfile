@@ -7,23 +7,23 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Windows Box PDC
   config.vm.define "pdc" do |win|
-    win.vm.box = "server-2008-r2-21NOV14"
+    win.vm.box = "server-2008-r2-17DEC14"
     win.vm.guest = "windows"
     win.vm.communicator = "winrm"
     win.vm.network :forwarded_port, guest: 80, host: 4321
     win.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct:true
     win.vm.network :forwarded_port, guest: 3389, host: 13389, id: "rdp", auto_correct:true
-    win.vm.network "private_network", ip: "192.168.33.10"
+    win.vm.network "private_network", ip: "192.168.33.10", auto_config: true
   end
   # Windows Box MDC
   config.vm.define "mdc" do |win|
-    win.vm.box = "server-2008-r2-21NOV14"
+    win.vm.box = "server-2008-r2-17DEC14"
     win.vm.guest = "windows"
     win.vm.communicator = "winrm"
     win.vm.network :forwarded_port, guest: 80, host: 4322
     win.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct:true
     win.vm.network :forwarded_port, guest: 3389, host: 13389, id: "rdp", auto_correct:true
-    win.vm.network "private_network", ip: "192.168.33.12"
+    win.vm.network "private_network", ip: "192.168.33.12", auto_config: true
   end
   #Ansible Hosts
   config.vm.define "ansible" do |ansible|
