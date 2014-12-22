@@ -10,6 +10,6 @@
   raw: powershell.exe -Command Restart-Computer -Force
   
 - name: Wait for computer to reboot
-  local_action: wait_for host={{ansible_ssh_host}}
+  local_action: wait_for host={{ansible_ssh_host}} timeout=600
                 port={{ansible_ssh_port}} state=started
                 delay=60
