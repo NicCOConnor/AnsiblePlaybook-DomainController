@@ -32,31 +32,46 @@ $CreateDNSDelegation =if(!$CreateDNSDeligation){"No"}else{$CreateDNSDelegation}	
 $DatabasePath =if(!$DatabasePath){"C:\WINDOWS\NTDS"}else{$DatabasePath}		#"C:\WINDOWS\NTDS"
 $LogPath =if(!$LogPath){"C:\WINDOWS\NTDS"}else{$LogPath}			#"C:\WINDOWS\NTDS"
 $SysVolPath =if(!$SysVolPath){"C:\WINDOWS\SYSVOL"}else{$SysVolPath}		#"C:\WINDOWS\SYSVOL"
-$SafeModeAdminPassword =if(!$SafeModeAdminPassword){"TesTing123!@#"}else{$SafeModeAdminPassword}		#I@
+$SafeModeAdminPassword =if(!$SafeModeAdminPassword){"TesTing123!@#"}else{$SafeModeAdminPassword}		
 $RebootOnCompletion =if(!$RebootOnCompletion){"No"}else{$RebootOnCompletion}					#Yes/No
 $Username = if(!$Username){""}else{$Username}
 $Password = if(!$Password){""}else{$Password}
 $ReplicaDomainDNSName = if(!$ReplicaDomainDNSName){""}else{$ReplicaDomainDNSName}
+trap
+{
+	Write-Error -ErrorRecord $_
+	exit 1;
+}
+dcpromo.exe /Unattend `
+			/ReplicaorNewDomain:$ReplicaOrNewDomain `
+			/ReplicaDomainDNSName:$ReplicaDomainDNSName `
+			/NewDomain:$NewDomain `
+			/NewDomainDNSName:$NewDomainDNSName `
+			/DomainNetBiosName:$DomainNetBiosName `
+			/ForestLevel:$ForestLevel `
+			/DomainLevel:$DomainLevel `
+			/InstallDns:$InstallDns `
+			/CreateDNSDelegation:$CreateDNSDelegation `
+			/DatabasePath:$DatabasePath `
+			/LogPath:$LogPath `
+			/SYSVOLPATH:$SysVolPath `
+			/SafeModeAdminPassword:$SafeModeAdminPassword `
+			/RebootOnCompletion:No `
+			/UserName:$Username `
+			/Password:$Password `
+			/UserDomain:$NewDomainDNSName
 
-$exitCode = dcpromo.exe /Unattend `
-				/ReplicaorNewDomain:$ReplicaOrNewDomain `
-				/ReplicaDomainDNSName:$ReplicaDomainDNSName `
-				/NewDomain:$NewDomain `
-				/NewDomainDNSName:$NewDomainDNSName `
-				/DomainNetBiosName:$DomainNetBiosName `
-				/ForestLevel:$ForestLevel `
-				/DomainLevel:$DomainLevel `
-				/InstallDns:$InstallDns `
-				/ConfirmGc:$ConfirmGc `
-				/CreateDNSDelegation:$CreateDNSDelegation `
-				/DatabasePath:$DatabasePath `
-				/LogPath:$LogPath `
-				/SYSVOLPATH:$SysVolPath `
-				/SafeModeAdminPassword:$SafeModeAdminPassword `
-				/RebootOnCompletion:$RebootOnCompletion `
-				/UserName:$Username `
-				/Password:$Password `
-				/UserDomain:$NewDomainDNSName
-
-Write-Host $exitCode
-exit 0
+if ($LastExitCode -lt 5) 
+{
+	#Success and reboot
+	Restart-Computer -Force
+	Exit 0;
+}
+elseif($LastExitCode -eq 77) #77 generally means it's installed already
+{
+	Exit 0;
+}
+else
+{
+	throw "DCPromo Failed"
+}
