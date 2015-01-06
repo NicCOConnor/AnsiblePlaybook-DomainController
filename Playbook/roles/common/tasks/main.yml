@@ -2,6 +2,7 @@
 - name: change hostname
   win_hostname: name="{{inventory_hostname_short}}" restart=no
   
+#TODO: Currently Causes a Reboot on every run. Need some conditionals in the Playbook.
 - name: Reboot Computer
   raw: powershell.exe -Command Restart-Computer -Force
   

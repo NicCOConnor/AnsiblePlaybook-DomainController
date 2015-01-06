@@ -1,4 +1,4 @@
-ansible_ssh_user: Administrator
+ansible_ssh_user: 'Administrator'
 ansible_ssh_pass: vagrant
 ansible_ssh_port: 5986
 ansible_connection: winrm
@@ -7,4 +7,4 @@ domain_username: '{{ netbios }}\\Administrator'
 domain_password: vagrant
 domain: "testing.com"
 netbios: "testing"
-dns_server: "{{ hostvars['DC-01']['ansible_ssh_host'] }}"
+dns_server: "{{ hostvars[groups['pdc']|first].ansible_ssh_host }}"

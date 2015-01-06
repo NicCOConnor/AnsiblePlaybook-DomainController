@@ -70,6 +70,7 @@ if ($LastExitCode -lt 5)
 }
 elseif($LastExitCode -eq 77) #77 generally means it's installed already
 {
+	#TODO Handle better.
 	Exit 0;
 }
 else
