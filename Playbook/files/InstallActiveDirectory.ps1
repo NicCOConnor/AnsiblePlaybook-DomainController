@@ -46,6 +46,7 @@ dcpromo.exe /Unattend `
 			/ReplicaorNewDomain:$ReplicaOrNewDomain `
 			/ReplicaDomainDNSName:$ReplicaDomainDNSName `
 			/NewDomain:$NewDomain `
+			/ConfirmGc:$ConfirmGc `
 			/NewDomainDNSName:$NewDomainDNSName `
 			/DomainNetBiosName:$DomainNetBiosName `
 			/ForestLevel:$ForestLevel `
@@ -64,7 +65,7 @@ dcpromo.exe /Unattend `
 if ($LastExitCode -lt 5) 
 {
 	#Success and reboot
-	Restart-Computer -Force
+	#Restart-Computer -Force
 	Exit 0;
 }
 elseif($LastExitCode -eq 77) #77 generally means it's installed already

@@ -1,9 +1,9 @@
 ---
 - name: change hostname
-  win_hostname: name="{{inventory_hostname_short}}" restart=yes
+  win_hostname: name="{{inventory_hostname_short}}" restart=no
   
-#- name: Pause for 1 Minute 
-#  pause: seconds=60
+- name: Reboot Computer
+  raw: powershell.exe -Command Restart-Computer -Force
   
 - name: Wait for computer to reboot
   local_action: wait_for host={{ansible_ssh_host}} timeout=600
