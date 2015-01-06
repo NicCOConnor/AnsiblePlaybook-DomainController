@@ -2,7 +2,6 @@
 
 - name: apply common configuration to all nodes
   hosts: all
-  
   roles:
   - common
   
@@ -15,8 +14,3 @@
   hosts: mdc
   roles:
     - domain-controller
-    
-- name: Join Computers to Domain
-  hosts: win7
-  roles:
-    - add-domain
