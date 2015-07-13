@@ -1,10 +1,10 @@
-####**Ansible-Playbook: Server 2008 R2 Domain Controller**
+#### **Ansible-Playbook: Server 2008 R2 Domain Controller**
 The goal of this playbook is to automatically provision a Windows 2008 R2 domain controller with any number of member domain controllers. 
 
 **Note:**
 If you intend to use this playbook outside the vagrant environment provided, it will not work without first installing ansible-modules-extras from source through my forked github repo https://github.com/NicCOConnor/ansible-modules-extras, see the vagrant/user-config.sh script for an idea on how to accomplish this. 
 
-####**Vagrant Pre-reqs**
+#### **Vagrant Pre-reqs**
 Vagrant 1.6.5+ https://www.vagrantup.com/
 
 VirtualBox 4.3.12+ https://www.virtualbox.org/
@@ -15,7 +15,7 @@ I found it much easier to work in this environment by using the vagrant sahara p
 
 **Docs:** https://github.com/jedi4ever/sahara
 
-####**Configuring the Vagrant Environment.** 
+#### **Configuring the Vagrant Environment.** 
 This Playbook comes equiped with a vagrant environment that needs to be configured before running. The First thing you will need to do is find a Windows 2008 R2 Vagrant Box and then configure that box to work with ansible. 
 
 I've found the packer application made by hashicorp (The same company that created vagrant) and this github repo to be helpful https://github.com/joefitzgerald/packer-windows however it takes a huge amount of time when updating windows. 
@@ -30,14 +30,14 @@ The vagrant environment provisions the following:
 - 2x  Windows 2008 R2 machines 
 - 1x Ansible machine based off of ubuntu 12.04
 
-#####**Modify the Vagrantfile**
+##### **Modify the Vagrantfile**
 for the PDC and MDC box change this line to your specific vagrant box
 
     win.vm.box = "server-2008-r2-21NOV14" #CHANGE ME
 
 The linux machine, which will become the ansible server uses the hashicorp/precise image and is readily available on the internet. The ```vagrant up``` command will automatically download and install this vagrant box onto your computer. 
 
-#####**Ansible Setup**
+##### **Ansible Setup**
 You need to make some changes in the playbook gourp_vars *Playbook/group_vars/all.yml* Most of these should be self explanitory if you are using the vagrant environment the username and password will be vagrant / vagrant for both the "ansible_ssh_\*" and "domain_\*"
 ```yaml
 ansible_ssh_user: Administrator
@@ -63,7 +63,7 @@ DC-02 ansible_ssh_host=192.168.33.12
 #etc...
 ```
 
-#####**Running the Ansible Playbook**#####
+##### **Running the Ansible Playbook**#####
 If you installed the sahara plugin for vagrant take a snapshot of your environment
 
 ```vagrant sandbox on```
