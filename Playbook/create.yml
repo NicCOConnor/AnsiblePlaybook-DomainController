@@ -1,0 +1,64 @@
+---
+
+- hosts: pdc;mdc
+  connection: local
+  user: vagrant
+  sudo: false
+  gather_facts: false
+  serial: 1
+  vars:
+    ansible_connection: local
+  
+  tasks:
+  - name: Create Servers
+    vsphere_guest:
+      vcenter_hostname: "{{ vCenter_Hostname }}"
+      username: "{{ vCenter_Username }}"
+      password: "{{ vCenter_Pass }}"
+      guest: "{{ inventory_hostname_short }}"
+      from_template: yes
+      template_src: T-2k8R2
+      cluster: "{{ vCenter_Cluster }}"
+      resource_pool: "/Resources"
+      snapshot_to_clone: "LinkClone"
+    
+- hosts: 127.0.0.1
+  connection: local
+  sudo: false
+  gather_facts: false
+  tasks:
+  - name: Wait For Machines to boot and load VMware GuestTools
+    local_action: wait_for host=localhost timeout=600
+                  port=22 state=started
+                  delay=60
+      
+- hosts: all
+  connection: local
+  user: user
+  sudo: false
+  gather_facts: false
+  serial: 1
+  vars:
+    ansible_connection: local
+  tasks:
+  - name: Get Guest Info
+    vsphere_guest:
+      vcenter_hostname: "{{vCenter_Hostname}}"
+      username: "{{vCenter_Username}}"
+      password: "{{vCenter_Pass}}"
+      guest: "{{ inventory_hostname_short }}"
+      vmware_guest_facts: yes
+      
+- hosts: 127.0.0.1
+  connection: local
+  user: root
+  sudo: yes
+  gather_facts: true
+  tasks:
+  - name: re-write Ansible hosts file
+    template:
+      src: templates/hosts.j2
+      dest: templates/hosts
+  
+  - name: copy hosts file to Playbook
+    raw: cp templates/hosts hosts

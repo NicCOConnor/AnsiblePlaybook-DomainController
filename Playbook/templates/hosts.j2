@@ -1,0 +1,8 @@
+{% for group in groups %}
+{% if group != "all" %}
+[{{ group }}]
+{% for host in groups[group] %}
+{{ hostvars[host]['inventory_hostname_short']}}  ansible_ssh_host={{ hostvars[host]['hw_eth0']['ipaddresses'][1] }}
+{% endfor %}
+{% endif %}
+{% endfor %}
