@@ -1,10 +1,9 @@
-ansible_ssh_user: 'Administrator'
-ansible_ssh_pass: vagrant
 ansible_ssh_port: 5986
 ansible_connection: winrm
-network: 192.168.33.0
-domain_username: '{{ netbios }}\\Administrator'
-domain_password: vagrant
+network: 192.168.1.0
 domain: "testing.com"
 netbios: "testing"
 dns_server: "{{ hostvars[groups['pdc']|first].ansible_ssh_host }}"
+vCenter_datastore: ds_nfs
+vCenter_Hostname: 192.168.1.210
+vCenter_Cluster: House
